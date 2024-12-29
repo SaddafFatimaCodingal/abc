@@ -1,0 +1,97 @@
+<!DOCTYPE html>  
+<html lang="en">  
+<head>  
+    <meta charset="UTF-8">  
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">  
+    <title>Marks Calculator</title>  
+    <style>  
+        body {  
+            font-family: Arial, sans-serif;  
+            margin: 20px;  
+        }  
+        table {  
+            border-collapse: collapse;  
+            width: 100%;  
+        }  
+        th, td {  
+            border: 1px solid #ccc;  
+            padding: 10px;  
+            text-align: center;  
+        }  
+        th {  
+            background-color: #f2f2f2;  
+        }  
+        .total, .average {  
+            font-weight: bold;  
+        }  
+    </style>  
+</head>  
+<body>  
+
+<h2>Marks Calculator</h2>  
+
+<table>  
+    <thead>  
+        <tr>  
+            <th>Student Name</th>  
+            <th>Subject 1</th>  
+            <th>Subject 2</th>  
+            <th>Subject 3</th>  
+            <th>Total Marks</th>  
+            <th>Average Marks</th>  
+        </tr>  
+    </thead>  
+    <tbody id="marksTable">  
+        <tr>  
+            <td><input type="text" placeholder="Enter Name"></td>  
+            <td><input type="number" class="subject" onchange="calculateMarks(this)"></td>  
+            <td><input type="number" class="subject" onchange="calculateMarks(this)"></td>  
+            <td><input type="number" class="subject" onchange="calculateMarks(this)"></td>  
+            <td class="total"></td>  
+            <td class="average"></td>  
+        </tr>  
+    </tbody>  
+</table>  
+
+<button onclick="addRow()">Add Row</button>  
+
+<script>  
+    function calculateMarks(input) {  
+        const row = input.closest('tr');  
+        const subjects = row.querySelectorAll('.subject');  
+        
+        let total = 0;  
+        let count = 0;  
+        
+        subjects.forEach(subject => {  
+            const mark = Number(subject.value);  
+            if (!isNaN(mark)) {  
+                total += mark;  
+                count++;  
+            }  
+        });  
+
+        const totalCell = row.querySelector('.total');  
+        const averageCell = row.querySelector('.average');  
+
+        totalCell.textContent = total;  
+        averageCell.textContent = count ? (total / count).toFixed(2) : '0.00';  
+    }  
+
+    function addRow() {  
+        const newRow = `  
+            <tr>  
+                <td><input type="text" placeholder="Enter Name"></td>  
+                <td><input type="number" class="subject" onchange="calculateMarks(this)"></td>  
+                <td><input type="number" class="subject" onchange="calculateMarks(this)"></td>  
+                <td><input type="number" class="subject" onchange="calculateMarks(this)"></td>  
+                <td class="total"></td>  
+                <td class="average"></td>  
+            </tr>  
+        `;  
+        document.getElementById('marksTable').insertAdjacentHTML('beforeend', newRow);  
+    }  
+</script>  
+
+</body>  
+</html>
